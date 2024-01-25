@@ -2,6 +2,7 @@
 style="
 background-color: red;
 position: fixed;
+z-index: -1;
 bottom :0;
 width: 100vw;
 height:10vh;

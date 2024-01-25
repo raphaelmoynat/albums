@@ -41,7 +41,7 @@ class SecurityController extends Controller
             $userRepository->save($user);
 
             $this->addFlash("compte bien créé bienvenue $username" ,"success");
-            return $this->redirect();
+            return $this->redirect("?type=album&action=index");
 
 
         }

@@ -59,7 +59,7 @@ use Core\Session\Session;
     </div>
 </nav>
 
-<div class="container">
+<div class="container mt-3">
     <?php foreach (Flash::getFlashes() as $flash) : ?>
         <div class="alert alert-<?= $flash['color'] ?> alert-dismissible fade show" role="alert">
             <?= $flash['message'] ?>
@@ -68,7 +68,7 @@ use Core\Session\Session;
 
     <?php  endforeach; ?>
 </div>
-<div class="container mt-5">
+<div class="container mt-3">
 
     <?= $content ?>
 </div>

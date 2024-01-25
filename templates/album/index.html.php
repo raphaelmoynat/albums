@@ -14,9 +14,9 @@ foreach ($albums as $album): ?>
             <p class="card-text"><?= $album->getYear() ?></p>
             <p class="fs-5 mt-5">Publié par : <?= $album->getAuthor()->getUsername() ?></p>
             <a href="?type=album&action=show&id=<?= $album->getId() ?>" class="btn btn-primary">Voir</a>
-            <?php if (Session::userConnected()): ?>
-            <a href="?type=album&action=edit&id=<?= $album->getId() ?>" class="btn btn-primary">Edit</a>
-            <a href="?type=album&action=delete&id=<?= $album->getId() ?>" class="btn btn-primary">Delete</a>
+            <?php if (Session::userConnected() && Session::user()['id'] == $album->getUserId()): ?>
+            <a href="?type=album&action=edit&id=<?= $album->getId() ?>" class="btn btn-warning">Edit</a>
+            <a href="?type=album&action=delete&id=<?= $album->getId() ?>" class="btn btn-danger">Delete</a>
             <?php endif; ?>
 
         </div>
@@ -25,4 +25,3 @@ foreach ($albums as $album): ?>
 
 <?php endforeach; ?>
 
-<a href="?type=album&action=create">Ajouter un album</a>

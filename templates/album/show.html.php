@@ -1,3 +1,10 @@
+<?php
+
+use Core\Session\Session;
+
+?>
+
+<a class="mt-5 " href="?type=album&action=index">Retour</a>
 
 
 <div class="card mb-3">
@@ -13,17 +20,17 @@
 
 
 <?php foreach ($album->getComments() as $comment): ?>
-<div class="border border-warning rounded mb-3 p-1">
-        <h6 class="fs-5"><strong><?= $comment->getContent() ?></strong></h6>
-    <p class="fs-5 mt-5">Auteur : <?= $comment->getAuthor()->getUsername() ?></p>
-
-        <a href="?type=comment&action=delete&id=<?= $comment->getId() ?>" class="btn btn-danger">Supprimer</a>
-        <a href="?type=comment&action=update&id=<?= $comment->getId() ?>" class="btn btn-warning">Editer</a>
-
-</div>
+    <div class="border border-warning rounded mb-3 p-1">
+            <h6 class="fs-5"><strong><?= $comment->getContent() ?></strong></h6>
+            <p class="fs-5 mt-5">Auteur : <?= $comment->getAuthor()->getUsername() ?></p>
+        <?php if(Session::userConnected() && Session::user()['id'] == $comment->getUserId()): ?>
+            <a href="?type=comment&action=delete&id=<?= $comment->getId() ?>" class="btn btn-danger">Supprimer</a>
+            <a href="?type=comment&action=update&id=<?= $comment->getId() ?>" class="btn btn-warning">Editer</a>
+        <?php endif; ?>
+    </div>
 <?php endforeach; ?>
 
-
+<?php if(Session::userConnected()): ?>
 <div>
     <form action="?type=comment&action=create" method="post" class="mt-5">
 
@@ -37,3 +44,5 @@
 
     </form>
 </div>
+<?php endif; ?>
+
