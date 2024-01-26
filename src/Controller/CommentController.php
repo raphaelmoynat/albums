@@ -64,6 +64,16 @@ class CommentController extends Controller
         if($comment)
         {
             $idAlbum = $comment->getAlbumId();
+
+            if($comment->getAuthor() != $this->getUser())
+            {
+                $this->addFlash("Ce n'est pas ton commentaire, tu ne peux pas le supprimer");
+
+                return  $this->redirect("?type=album&action=show&id=$idAlbum");
+
+            }
+
+
             $commentRepository->delete($comment);
 
 
@@ -99,7 +109,6 @@ class CommentController extends Controller
                 return $this->redirect();
             }
 
-
             $comment->setContent($content);
 
 
@@ -123,6 +132,16 @@ class CommentController extends Controller
 
         if($comment)
         {
+
+            if($comment->getAuthor() != $this->getUser())
+            {
+                $this->addFlash("Ce n'est pas ton commentaire, tu ne peux pas le modifier");
+
+                return  $this->redirect("?type=album&action=show&id=" . $comment->getAlbumId());
+
+            }
+
+
 
             return $this->render("comment/edit", [
                 "pageTitle"=>"modifier",

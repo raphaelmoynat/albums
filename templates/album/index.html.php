@@ -2,6 +2,9 @@
 
 <?php use Core\Session\Session;
 
+
+
+
 foreach ($albums as $album): ?>
 
     <div class="card mb-3">

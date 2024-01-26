@@ -65,6 +65,17 @@ class AlbumController extends Controller
             return $this->redirect();
         }
 
+
+        if($album->getAuthor() != $this->getUser())
+        {
+            $this->addFlash("Ce n'est pas ton album, tu ne peux pas le supprimer");
+
+            return  $this->redirect("?type=album&action=index");
+
+        }
+
+
+        $this->addFlash("album bien supprimé");
         $albumRepository->delete($album);
 
         return $this->redirect("?type=album&action=index");
@@ -107,7 +118,7 @@ class AlbumController extends Controller
 
             $albumRepository = new AlbumRepository();
 
-            $album = $albumRepository->save($album);
+            $albumRepository->save($album);
 
             return $this->redirect("?type=album&action=index");
 
@@ -141,8 +152,14 @@ class AlbumController extends Controller
                 $artist = $_POST['artist'];
             }
             if (!empty($_POST['year'])) {
+                if(!ctype_digit($_POST['year'])){
+                    $this->addFlash("Entrez une année valide.");
+                    return  $this->redirect("?type=album&action=edit&id=$idAlbum");
+
+                }
                 $year = $_POST['year'];
             }
+
 
             if ($name && $artist && $year) {
                 $albumRepository = new AlbumRepository();
@@ -177,6 +194,14 @@ class AlbumController extends Controller
 
             if (!$album) {
                 return $this->redirect();
+            }
+
+            if($album->getAuthor() != $this->getUser())
+            {
+                $this->addFlash("Ce n'est pas ton album, tu ne peux pas le modifier");
+
+                return  $this->redirect("?type=album&action=index");
+
             }
 
             return $this->render("album/edit", [
